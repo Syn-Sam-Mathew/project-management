@@ -6,7 +6,7 @@ app.controller("MainController",['$scope',function($scope){
   // Keep track of all auctions
   $scope.projects = [];
   $scope.project = {};
-  $scope.phase = {};
+  $scope.asset = "";
   var accounts = web3.eth.accounts;
   web3.eth.defaultAccount = accounts[0];
   $scope.selectedAccount = accounts[0];
@@ -44,20 +44,18 @@ app.controller("MainController",['$scope',function($scope){
 
   $scope.startRFP = function(){
     //console.log($scope.project);
-    $scope.assignTo = "";
-    $scope.status = "";
+    $scope.project.status = [];
+    $scope.project.assets = [];
     for (var i = 0 ; i < $scope.project.assignTo.length ; i++){
-      $scope.assignTo += $scope.project.assignTo[i];
-      $scope.phase[$scope.getAccountName($scope.project.assignTo[i])] = false;
-      $scope.status += false;
-      if (i != $scope.project.assignTo.length - 1){
-        $scope.assignTo += ",";
-        $scope.status += ",";
-      }
-    } 
-    console.log($scope.status);
-    console.log($scope.assignTo);
-    myethPMA.startRFP($scope.project.name, $scope.project.description, $scope.project.amount, $scope.selectedAccount, $scope.assignTo, $scope.status).then (
+      $scope.project.status[i] = false;
+      $scope.project.assets[i] = "";
+    }
+    $scope.assignTo = $scope.serialize($scope.project.assignTo);
+    $scope.status = $scope.serialize($scope.project.status);
+    $scope.assets = $scope.serialize($scope.project.assets);
+    //console.log($scope.status);
+    //console.log($scope.assignTo);
+    myethPMA.startRFP($scope.project.name, $scope.project.description, $scope.project.amount, $scope.selectedAccount, $scope.assignTo, $scope.status, $scope.assets).then (
     function (project)
     { 
       $scope.project= {}; 
@@ -74,12 +72,16 @@ app.controller("MainController",['$scope',function($scope){
     $scope.projects[data.projectID.toNumber()].recipient = data.recipient;
     $scope.projects[data.projectID.toNumber()].assignTo = [];
     $scope.projects[data.projectID.toNumber()].assignTo = data.assignTo.split(",");
+    $scope.projects[data.projectID.toNumber()].status = data.status.split(",");
+    $scope.projects[data.projectID.toNumber()].assets = data.assets.split(",");
     $scope.projects[data.projectID.toNumber()].phase = {};
-    $scope.status = data.status.split(",");
+    $scope.projects[data.projectID.toNumber()].projectAsset = {};
     for (var i = 0 ; i < $scope.projects[data.projectID.toNumber()].assignTo.length ; i++){
-      $scope.projects[data.projectID.toNumber()].phase[$scope.getAccountName($scope.projects[data.projectID.toNumber()].assignTo[i])] = $scope.status[i];  
+      $scope.projects[data.projectID.toNumber()].phase[$scope.getAccountName($scope.projects[data.projectID.toNumber()].assignTo[i])] = $scope.projects[data.projectID.toNumber()].status[i];
+      $scope.projects[data.projectID.toNumber()].projectAsset[$scope.getAccountName($scope.projects[data.projectID.toNumber()].assignTo[i])] = $scope.projects[data.projectID.toNumber()].assets[i];  
     }
     console.log($scope.projects[data.projectID.toNumber()].phase);
+    console.log($scope.projects[data.projectID.toNumber()].projectAsset);
     $scope.$apply();
   }
 
@@ -90,6 +92,48 @@ app.controller("MainController",['$scope',function($scope){
           return key;
         }
       }
+  }
+
+  $scope.accept = function(name,value,asset){
+    console.log(name,value,asset);
+    var id = $scope.getId(name);
+    console.log(id);
+    for (var i = 0 ; i < $scope.projects[id].assignTo.length ; i++){
+      if(value == $scope.projects[id].assignTo[i]){
+        $scope.projects[id].status[i] = true;
+        $scope.projects[id].assets[i] = asset; 
+      }
+    }
+    $scope.status = $scope.serialize($scope.projects[id].status);
+    console.log($scope.status);
+    $scope.assets = $scope.serialize($scope.projects[id].assets);
+    console.log($scope.assets);
+    myethPMA.updateContract(id,$scope.status,$scope.assets).then(
+      function (project)
+    { 
+      console.log('Contract Updated: ', project);
+    }); 
+  }
+
+  $scope.getId = function(name){
+   for ( var i=0; i < $scope.projects.length; i++){
+        if ($scope.projects[i].name == name)
+        {
+          console.log(i);
+          return i;
+        }
+    } 
+  }
+
+  $scope.serialize = function(arr){
+    var temp = "";
+    for (var i = 0 ; i < arr.length ; i++){
+      temp += arr[i];
+      if (i !=  arr.length - 1){
+        temp += ",";
+      }
+    }
+    return temp;  
   }
 
 }]); 

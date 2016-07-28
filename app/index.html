@@ -67,19 +67,19 @@
                     <div id="deployed" class="container-fluid">  
                       <div class="row">
                         <div class="col-md-3 cell">Project Name</div>
-                        <div class="col-md-2 cell">Project Status</div>
-                        <div class="col-md-2 cell">Project Assets</div>
+                        <div class="col-md-3 cell">Project Status</div>
+                        <div class="col-md-3 cell">Project Assets</div>
                         <div class="col-md-3 cell">Phase</div>
-                        <div class="col-md-2 cell">Update</div>
                       </div>
                       <div class="row" ng-repeat="p in projects" ng-hide="selectedAccount!=p.recipient">
                         <div class="col-md-3 cell">{{p.name}}</div>
-                        <div class="col-md-2 cell">{{phase.Synechron}}</div>
-                        <div class="col-md-2 cell">Project Assets</div>
+                        <div class="col-md-3 cell">{{p.phase.Synechron}}</div>
                         <div class="col-md-3 cell">
-                          <div ng-repeat="(name, value) in phase"> {{name}}: {{value}}</div>
+                          <div ng-repeat="(name, value) in p.projectAsset"> {{name}}: {{value}}</div>
                         </div>
-                        <div class="col-md-2 cell">Update</div>
+                        <div class="col-md-3 cell">
+                          <div ng-repeat="(name, value) in p.phase"> {{name}}: {{value}}</div>
+                        </div>
                       </div>
                     </div>
               </div>
@@ -108,13 +108,16 @@
                         <div class="col-md-3 cell">Upload Project Asset</div>
                         <div class="col-md-3 cell">Accept/Reject</div>
                       </div>
-                      <div class="row" ng-repeat="p in projects" ng-hide="p.assignTo.indexOf(selectedAccount) == -1">
+                      <div class="row" ng-repeat="p in projects" ng-hide="p.assignTo.indexOf(selectedAccount) == -1 || p.phase[getAccountName(selectedAccount)] == 'true'">
                         <div class="col-md-3 cell">{{p.name}}</div>
-                        <div class="col-md-3 cell">Project Status</div>
-                        <div class="col-md-3 cell">Project Assets</div>
+                        <div class="col-md-3 cell">{{p.phase.Synechron}}</div>
                         <div class="col-md-3 cell">
-                          <button class="btn btn-default">Accept</button>
-                          <button class="btn btn-default">Reject</button>
+                          <textarea id="assets" placeholder="Assets" rows="1" ng-model="asset"></textarea>
+                        </div>
+                        <div class="col-md-3 cell">
+                          <button class="btn btn-default" ng-hide = "selectedAccount != accounts.Synechron" ng-click="accept(p.name,selectedAccount,asset)">Accept</button>
+                          <button class="btn btn-default" ng-hide = "selectedAccount != accounts.Synechron">Reject</button>
+                          <button class="btn btn-default" ng-hide = 'selectedAccount == accounts.Synechron || p.phase.Synechron == "false"' ng-click="accept(p.name,selectedAccount,asset)">Submit</button>
                         </div>
                       </div>
                     </div>
