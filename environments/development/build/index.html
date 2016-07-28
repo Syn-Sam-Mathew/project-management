@@ -1,0 +1,137 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project Management</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href="./app.css" rel='stylesheet' type='text/css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+  <script src="./app.js"></script>
+</head>
+<body ng-app="pmapp" ng-controller="MainController">
+<div class="section">
+      <h2>Switch user:</h2>
+        <select name="switchUser" id="switchUser" ng-model="selectedAccount">
+          <option ng-repeat="(name,value) in accounts" ng-selected="{{value==selectedAccount}}" value="{{value}}">{{name}}</option>
+        </select>
+</div>
+<div class="container-fluid">
+  
+  <div class="row">
+    <div class="col-md-3">
+      
+      <div class="panel panel-default">
+        
+        <div class="panel-heading">Create Contract</div>
+        
+        <div class="panel-body">
+          
+          <form>
+            <div class="form-group">
+              <label for="name" id="">Project Name </label>
+              <input type="text" class="form-control" id="name" placeholder="Project Name" ng-model="project.name">
+            </div>
+            <div class="form-group">
+              <label for="description">Project Description</label>
+              <textarea id="description" class="form-control" placeholder="Description" rows="3" ng-model="project.description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="amountToBePaid">Amount to be Paid </label>
+              <input type="text" class="form-control" id="amountToBePaid" placeholder="Amount" ng-model="project.amount">
+            </div>
+            <div class="form-group">
+              <label for="visibleTo">Assign To</label>
+              <select id="accountSelect" multiple class="form-control" ng-model="project.assignTo">
+                <option ng-repeat="(name,value) in accounts" ng-if="value != selectedAccount" value="{{value}}">{{name}}</option>
+              </select>
+            </div>
+          </form>
+          <button class="btn btn-default" ng-click="startRFP()">Create New Contract</button>
+        </div>
+      
+      </div>
+    
+    </div>
+    <div class="col-md-9">
+        
+      <div class="container-fluid">
+        
+        <div class="row">
+          <div class="col-md-12">
+            
+            <div class="panel panel-default">
+              
+              <div class="panel-heading">Contracts Deployed By Me</div>
+              
+              <div class="panel-body">
+                    <div id="deployed" class="container-fluid">  
+                      <div class="row">
+                        <div class="col-md-3 cell">Project Name</div>
+                        <div class="col-md-2 cell">Project Status</div>
+                        <div class="col-md-2 cell">Project Assets</div>
+                        <div class="col-md-3 cell">Phase</div>
+                        <div class="col-md-2 cell">Update</div>
+                      </div>
+                      <div class="row" ng-repeat="p in projects" ng-hide="selectedAccount!=p.recipient">
+                        <div class="col-md-3 cell">{{p.name}}</div>
+                        <div class="col-md-2 cell">{{phase.Synechron}}</div>
+                        <div class="col-md-2 cell">Project Assets</div>
+                        <div class="col-md-3 cell">
+                          <div ng-repeat="(name, value) in phase"> {{name}}: {{value}}</div>
+                        </div>
+                        <div class="col-md-2 cell">Update</div>
+                      </div>
+                    </div>
+              </div>
+            
+            </div>
+          
+          </div>
+        </div>
+      
+      </div>  
+    
+      <div class="container-fluid">
+        
+        <div class="row">
+          <div class="col-md-12">
+            
+            <div class="panel panel-default">
+              
+              <div class="panel-heading">Pending Contracts</div>
+              
+              <div class="panel-body">
+                  <div class="container-fluid">  
+                      <div class="row">
+                        <div class="col-md-3 cell">Project Name</div>
+                        <div class="col-md-3 cell">Project Status</div>
+                        <div class="col-md-3 cell">Upload Project Asset</div>
+                        <div class="col-md-3 cell">Accept/Reject</div>
+                      </div>
+                      <div class="row" ng-repeat="p in projects" ng-hide="p.assignTo.indexOf(selectedAccount) == -1">
+                        <div class="col-md-3 cell">{{p.name}}</div>
+                        <div class="col-md-3 cell">Project Status</div>
+                        <div class="col-md-3 cell">Project Assets</div>
+                        <div class="col-md-3 cell">
+                          <button class="btn btn-default">Accept</button>
+                          <button class="btn btn-default">Reject</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            
+            </div>
+          
+          </div>
+        </div>
+      
+      </div> 
+    </div>
+
+</div>
+
+</body>
+</html>
