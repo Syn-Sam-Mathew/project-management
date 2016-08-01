@@ -10,17 +10,21 @@
 </head>
 <body ng-app="pmapp" ng-controller="MainController">
 <div class="section">
-      <h2>Switch user:</h2>
+      <h2>Select user:</h2>
         <select name="switchUser" id="switchUser" ng-model="selectedAccount">
           <option ng-repeat="(name,value) in accounts" ng-selected="{{value==selectedAccount}}" value="{{value}}">{{name}}</option>
         </select>
 </div>
-<div class="container-fluid">
+<div class="section" ng-show= "selectedAccount == accounts.Synechron || selectedAccount == accounts.Client">
+      <h2>Balance:{{balances[getAccountName(selectedAccount)]}}</h2>
+      <h2>{{balance}}</h2>
+</div>
+<div class="container-fluid" >
   
   <div class="row">
     <div class="col-md-3">
       
-      <div class="panel panel-default">
+      <div class="panel panel-default" ng-hide="selectedAccount != accounts.Client">
         
         <div class="panel-heading">Create Contract</div>
         
@@ -42,7 +46,7 @@
             <div class="form-group">
               <label for="visibleTo">Assign To</label>
               <select id="accountSelect" multiple class="form-control" ng-model="project.assignTo">
-                <option ng-repeat="(name,value) in accounts" ng-if="value != selectedAccount" value="{{value}}">{{name}}</option>
+                <option ng-repeat="(name,value) in accounts" value="{{value}}">{{name}}</option>
               </select>
             </div>
           </form>
@@ -54,7 +58,7 @@
     </div>
     <div class="col-md-9">
         
-      <div class="container-fluid">
+      <div class="container-fluid" ng-hide="selectedAccount != accounts.Client">
         
         <div class="row">
           <div class="col-md-12">
@@ -66,12 +70,49 @@
               <div class="panel-body">
                     <div id="deployed" class="container-fluid">  
                       <div class="row">
-                        <div class="col-md-3 cell">Project Name</div>
-                        <div class="col-md-3 cell">Project Status</div>
-                        <div class="col-md-3 cell">Project Assets</div>
-                        <div class="col-md-3 cell">Phase</div>
+                        <div class="col-md-3 cell-heading">Project Name</div>
+                        <div class="col-md-3 cell-heading">Project Status</div>
+                        <div class="col-md-3 cell-heading">Project Assets</div>
+                        <div class="col-md-3 cell-heading">Phase</div>
                       </div>
-                      <div class="row" ng-repeat="p in projects" ng-hide="selectedAccount!=p.recipient">
+                      <div class="row" ng-repeat="p in projects" ng-hide="selectedAccount!=p.client || p.reject == 'true' || p.done == 'true' ">
+                        <div class="col-md-3 cell">{{p.name}}</div>
+                        <div class="col-md-3 cell">{{p.phase.Synechron}}</div>
+                        <div class="col-md-3 cell">
+                          <div ng-repeat="(name, value) in p.projectAsset"> {{name}}: {{value}}</div>
+                        </div>
+                        <div class="col-md-3 cell">
+                          <div ng-repeat="(name, value) in p.phase"> {{name}}: {{value}}</div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            
+            </div>
+          
+          </div>
+        </div>
+      
+      </div>  
+
+      <div class="container-fluid" ng-hide="selectedAccount == accounts.Developer || selectedAccount == accounts['Project Manager'] ">
+        
+        <div class="row">
+          <div class="col-md-12">
+            
+            <div class="panel panel-default">
+              
+              <div class="panel-heading">Completed Projects</div>
+              
+              <div class="panel-body">
+                    <div id="deployed" class="container-fluid">  
+                      <div class="row">
+                        <div class="col-md-3 cell-heading">Project Name</div>
+                        <div class="col-md-3 cell-heading">Project Status</div>
+                        <div class="col-md-3 cell-heading">Project Assets</div>
+                        <div class="col-md-3 cell-heading">Phase</div>
+                      </div>
+                      <div class="row" ng-repeat="p in projects" ng-hide="p.reject == 'true' || p.done != 'true' ">
                         <div class="col-md-3 cell">{{p.name}}</div>
                         <div class="col-md-3 cell">{{p.phase.Synechron}}</div>
                         <div class="col-md-3 cell">
@@ -103,12 +144,12 @@
               <div class="panel-body">
                   <div class="container-fluid">  
                       <div class="row">
-                        <div class="col-md-3 cell">Project Name</div>
-                        <div class="col-md-3 cell">Project Status</div>
-                        <div class="col-md-3 cell">Upload Project Asset</div>
-                        <div class="col-md-3 cell">Accept/Reject</div>
+                        <div class="col-md-3 cell-heading">Project Name</div>
+                        <div class="col-md-3 cell-heading">Project Status</div>
+                        <div class="col-md-3 cell-heading">Upload Project Asset</div>
+                        <div class="col-md-3 cell-heading">Accept/Reject</div>
                       </div>
-                      <div class="row" ng-repeat="p in projects" ng-hide="p.assignTo.indexOf(selectedAccount) == -1 || p.phase[getAccountName(selectedAccount)] == 'true'">
+                      <div class="row" ng-repeat="p in projects" ng-hide="p.assignTo.indexOf(selectedAccount) == -1 || p.phase[getAccountName(selectedAccount)] == 'true' || p.reject == 'true'">
                         <div class="col-md-3 cell">{{p.name}}</div>
                         <div class="col-md-3 cell">{{p.phase.Synechron}}</div>
                         <div class="col-md-3 cell">
@@ -116,8 +157,11 @@
                         </div>
                         <div class="col-md-3 cell">
                           <button class="btn btn-default" ng-hide = "selectedAccount != accounts.Synechron" ng-click="accept(p.name,selectedAccount,asset)">Accept</button>
-                          <button class="btn btn-default" ng-hide = "selectedAccount != accounts.Synechron">Reject</button>
-                          <button class="btn btn-default" ng-hide = 'selectedAccount == accounts.Synechron || p.phase.Synechron == "false"' ng-click="accept(p.name,selectedAccount,asset)">Submit</button>
+                          <button class="btn btn-default" ng-hide = "selectedAccount != accounts.Synechron" ng-click="reject(p.name)">Reject</button>
+                          <button class="btn btn-default" ng-show = "selectedAccount == accounts['Project Manager'] && p.phase.Synechron == 'true'" ng-click="accept(p.name,selectedAccount,asset)">Submit</button
+                          >
+                          <button class="btn btn-default" ng-show = "selectedAccount == accounts.Developer && p.phase['Project Manager'] == 'true'" ng-click="accept(p.name,selectedAccount,asset)">Submit</button>
+                          <button class="btn btn-default" ng-show = "selectedAccount == accounts.Client && p.phase.Developer == 'true'" ng-click="accept(p.name,selectedAccount,asset)">Submit</button>
                         </div>
                       </div>
                     </div>
@@ -128,6 +172,66 @@
           
           </div>
         </div>
+
+        <div class="container-fluid" ng-hide="selectedAccount == accounts.Client ">
+        
+        <div class="row">
+          <div class="col-md-12">
+            
+            <div class="panel panel-default">
+              
+              <div class="panel-heading">Active Contracts</div>
+              
+              <div class="panel-body">
+                    <div id="deployed" class="container-fluid">  
+                      <div class="row">
+                        <div class="col-md-3 cell-heading">Project Name</div>
+                        <div class="col-md-3 cell-heading">Project Status</div>
+                        <div class="col-md-3 cell-heading">Project Assets</div>
+                        <div class="col-md-3 cell-heading">Phase</div>
+                      </div>
+                      <div class="row" ng-repeat="p in projects" ng-hide="selectedAccount != accounts.Synechron || p.phase.Synechron == 'false' || p.done == 'true' || p.reject == 'true'">
+                        <div class="col-md-3 cell">{{p.name}}</div>
+                        <div class="col-md-3 cell">{{p.phase.Synechron}}</div>
+                        <div class="col-md-3 cell">
+                        {{p.done}}
+                          <div ng-repeat="(name, value) in p.projectAsset"> {{name}}: {{value}}</div>
+                        </div>
+                        <div class="col-md-3 cell">
+                          <div ng-repeat="(name, value) in p.phase"> {{name}}: {{value}}</div>
+                        </div>
+                      </div>
+                      <div class="row" ng-repeat="p in projects" ng-hide="selectedAccount != accounts['Project Manager'] || p.phase['Project Manager'] == 'false' || p.done == 'true' || p.reject == 'true'">
+                        <div class="col-md-3 cell">{{p.name}}</div>
+                        <div class="col-md-3 cell">{{p.phase.Synechron}}</div>
+                        <div class="col-md-3 cell">
+                        {{p.done}}
+                          <div ng-repeat="(name, value) in p.projectAsset"> {{name}}: {{value}}</div>
+                        </div>
+                        <div class="col-md-3 cell">
+                          <div ng-repeat="(name, value) in p.phase"> {{name}}: {{value}}</div>
+                        </div>
+                      </div>
+                      <div class="row" ng-repeat="p in projects" ng-hide="selectedAccount != accounts.Developer || p.phase.Developer == 'false' || p.done == 'true' || p.reject == 'true'">
+                        <div class="col-md-3 cell">{{p.name}}</div>
+                        <div class="col-md-3 cell">{{p.phase.Synechron}}</div>
+                        <div class="col-md-3 cell">
+                        {{p.done}}
+                          <div ng-repeat="(name, value) in p.projectAsset"> {{name}}: {{value}}</div>
+                        </div>
+                        <div class="col-md-3 cell">
+                          <div ng-repeat="(name, value) in p.phase"> {{name}}: {{value}}</div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            
+            </div>
+          
+          </div>
+        </div>
+      
+      </div>
       
       </div> 
     </div>

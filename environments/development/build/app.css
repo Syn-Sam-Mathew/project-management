@@ -46,8 +46,20 @@ h3 {
    background-color: #f5f5f5;
    border: 1px solid black;
    border-right-style: hidden;
+   height:100px;
 }
 
 .cell:last-child{
+   border: 1px solid black;
+}
+
+.cell-heading{
+   padding: 10px 15px;
+   background-color: #f5f5f5;
+   border: 1px solid black;
+   border-right-style: hidden;
+}
+
+.cell-heading:last-child{
    border: 1px solid black;
 }
