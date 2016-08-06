@@ -8,6 +8,7 @@ contract EthPMA{
 		string assignTo;
 		string status;
 		string assets;
+		string links;
 	}
 	mapping(uint => project) Projects;
 	uint totalProjects;
@@ -15,7 +16,7 @@ contract EthPMA{
 	event Update(string name, string description, uint amount, uint projectID, address client, address consultant,string assignTo, string status, string assets);
 	event Ended(uint projectID);
 
-	function startRFP(string name, string description, address consultant,string assignTo,string status, string assets)  {
+	function startRFP(string name, string description, address consultant,string assignTo,string status, string assets,string)  {
 		uint projectID = totalProjects++;
 
 		Projects[projectID].name = name;
@@ -26,28 +27,11 @@ contract EthPMA{
 		Projects[projectID].assignTo = assignTo;
 		Projects[projectID].status = status;
 		Projects[projectID].assets = assets;
-		//Projects[projectID].client.send(Projects[projectID].amount);
-		
-
-		/*uint projectID = 0;
-
-		Projects[projectID].name = name;
-		Projects[projectID].description = description;
-		Projects[projectID].amount = msg.value;
-		Projects[projectID].client = msg.sender;
-		Projects[projectID].consultant = consultant;
-		Projects[projectID].assignTo = assignTo;
-		Projects[projectID].status = status;
-		Projects[projectID].assets = assets;
-		
-		//Projects[projectID].client.send(Projects[projectID].amount);
-		*/
-
 
 		Update(Projects[projectID].name, Projects[projectID].description, Projects[projectID].amount, projectID, Projects[projectID].client, Projects[projectID].consultant, Projects[projectID].assignTo, Projects[projectID].status, Projects[projectID].assets); 
-	}
+	}	
 
-	function updateContract(uint id,string status, string assets){
+function updateContract(uint id,string status, string assets){
 		project p = Projects[id];
 		p.status = status;
 		p.assets = assets;
@@ -57,7 +41,7 @@ contract EthPMA{
 	function endContract(uint id){
 		project p = Projects[id];
 		p.consultant = msg.sender;
-		p.consultant.send(10000000000000000000000);
+		p.consultant.send(p.amount);
 		Ended(id);
 	}
 
@@ -67,4 +51,6 @@ contract EthPMA{
 		p.client.send(p.amount);
 		Ended(id);
 	}
+
+	
 }
