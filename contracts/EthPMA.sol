@@ -16,7 +16,7 @@ contract EthPMA{
 	event Update(string name, string description, uint amount, uint projectID, address client, address consultant,string assignTo, string status, string assets);
 	event Ended(uint projectID);
 
-	function startRFP(string name, string description, address consultant,string assignTo,string status, string assets,string)  {
+	function startRFP(string name, string description, address consultant,string assignTo, string status, string assets)  {
 		uint projectID = totalProjects++;
 
 		Projects[projectID].name = name;

@@ -55,6 +55,7 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
 
       $scope.showBalance();
       console.log('EthPMA created');
+      console.log($scope.accounts);
     }, function(err) {
       console.log(err);
     });
@@ -106,7 +107,7 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
    for ( var i=0; i < $scope.projects.length; i++){
         if ($scope.projects[i].name == name)
         {
-          console.log(i);
+          //console.log(i);
           return i;
         }
     } 
@@ -120,7 +121,7 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
     // Get the download URL 
     starsRef.getDownloadURL().then(function(url) {
     // Insert url into an <img> tag to "download"
-      console.log(url);
+      //console.log(url);
       return url;
     }).catch(function(error) {
       switch (error.code) {
@@ -147,53 +148,6 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
   //Selecting asset file  
   $scope.selectFile = function(f, errFiles) {
         $scope.f = f;
-        // File or Blob named mountains.jpg
-        /*var file = f;
-        var storageRef = firebase.storage().ref();
-
-
-        // Create the file metadata
-        var metadata = {
-          contentType: 'image/png'
-        };
-
-        // Upload file and metadata to the object 'images/mountains.jpg'
-        var uploadTask = storageRef.child('images/' + file.name).put(file);
-
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-        function(snapshot) {
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-                case firebase.storage.TaskState.PAUSED: // or 'paused'
-                  console.log('Upload is paused');
-                  break;
-                case firebase.storage.TaskState.RUNNING: // or 'running'
-                  console.log('Upload is running');
-                  break;
-            }
-        }, function(error) {
-            switch (error.code) {
-              case 'storage/unauthorized':
-              // User doesn't have permission to access the object
-              break;
-
-              case 'storage/canceled':
-              // User canceled the upload
-              break;
-
-              case 'storage/unknown':
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-            }
-        }, function() {
-          // Upload completed successfully, now we can get the download URL
-          $scope.downloadURL = uploadTask.snapshot.downloadURL;
-          console.log($scope.downloadURL);
-          $scope.$apply();
-        });*/
     }
 
 
@@ -214,17 +168,17 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
     $scope.status = $scope.serialize($scope.project.status);
     $scope.assets = $scope.serialize($scope.project.assets);
     
-    console.log($scope.status);
-    console.log($scope.assignTo);
+    //console.log($scope.status);
+    //console.log($scope.assignTo);
     
     var xvalue = web3.toWei(Number($scope.project.amount),"ether");
     var xfrom = $scope.selectedAccount;
     
-    console.log(xfrom);
-    console.log(xvalue);
+    //console.log(xfrom);
+    //console.log(xvalue);
     
     //Calling PMA startRFP function
-    myethPMA.startRFP($scope.project.name, $scope.project.description, $scope.accounts.Provider,$scope.assignTo, $scope.status, $scope.assets,{ from: xfrom, value: 10000000000000000000000 }).then (
+    myethPMA.startRFP($scope.project.name, $scope.project.description, $scope.accounts.Provider,$scope.assignTo, $scope.status, $scope.assets,{ from: xfrom, value: xvalue }).then (
     function (project)
     { 
       $scope.project= {}; 
@@ -238,7 +192,7 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
     $scope.projects[data.projectID.toNumber()].projectID= data.projectID.toNumber();      //Project ID
     $scope.projects[data.projectID.toNumber()].name= data.name;                           //Project Name
     $scope.projects[data.projectID.toNumber()].description = data.description             //Project Description
-    $scope.projects[data.projectID.toNumber()].amount = data.amount.toNumber();           //Project Amount
+    $scope.projects[data.projectID.toNumber()].amount = web3.fromWei(data.amount.toNumber(),"ether");           //Project Amount
     $scope.projects[data.projectID.toNumber()].client = data.client;                      //Project Client
     $scope.projects[data.projectID.toNumber()].consultant = data.consultant;              //Project Provider
     $scope.projects[data.projectID.toNumber()].assignTo = data.assignTo.split(",");       //Project Contract Visibility
@@ -264,9 +218,9 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
         starsRef.getDownloadURL().then(function(url) {
         // Insert url into an <img> tag to "download"
           $scope.projects[data.projectID.toNumber()].fileLinks[name] = url;
-          console.log(name);
-          console.log($scope.projects[data.projectID.toNumber()].fileLinks);
-          console.log($scope.projects[data.projectID.toNumber()].fileLinks[name]);
+          //console.log(name);
+          //console.log($scope.projects[data.projectID.toNumber()].fileLinks);
+          //console.log($scope.projects[data.projectID.toNumber()].fileLinks[name]);
           $scope.$apply();
         }).catch(function(error) {
           switch (error.code) {
@@ -287,8 +241,6 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
           break;
         }
       });
-      /*$scope.projects[data.projectID.toNumber()].fileLinks[$scope.projects[data.projectID.toNumber()].assets[i]] = $scope.getLink($scope.projects[data.projectID.toNumber()].assets[i]);
-      console.log($scope.getLink($scope.projects[data.projectID.toNumber()].assets[i]));*/
       }
     }
 
@@ -306,16 +258,16 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
         }
       }
     }
-    console.log($scope.projects[data.projectID.toNumber()].phase);
-    console.log($scope.projects[data.projectID.toNumber()].projectAsset);
+    //console.log($scope.projects[data.projectID.toNumber()].phase);
+    //console.log($scope.projects[data.projectID.toNumber()].projectAsset);
     $scope.$apply();
   }
 
   //Submitting Assets 
   $scope.accept = function(name,value,asset){
-    console.log(name,value,asset);
+    //console.log(name,value,asset);
     var id = $scope.getId(name);
-    console.log(id);
+    //console.log(id);
 
     var file = $scope.f;                          //Assigning File
 
@@ -359,7 +311,7 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
     }, function() {
           // Upload completed successfully, now we can get the download URL
           $scope.downloadURL = uploadTask.snapshot.downloadURL;
-          console.log($scope.downloadURL);
+          //console.log($scope.downloadURL);
           for (var i = 0 ; i < $scope.projects[id].assignTo.length ; i++){
             if(value == $scope.projects[id].assignTo[i]){
               $scope.projects[id].status[i] = "Done";
@@ -368,9 +320,9 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
           }
 
           $scope.status = $scope.serialize($scope.projects[id].status);
-          console.log($scope.status);
+          //console.log($scope.status);
           $scope.assets = $scope.serialize($scope.projects[id].assets);
-          console.log($scope.assets);
+          //console.log($scope.assets);
           myethPMA.updateContract(id,$scope.status,$scope.assets).then(
             function (project)
           { 
@@ -385,8 +337,8 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
   {
     var id = $scope.getId(name);
     $scope.projects[id].done = "true";
-    console.log(id);
-    console.log($scope.projects[id].done);
+    //console.log(id);
+    //console.log($scope.projects[id].done);
     myethPMA.endContract(id, {from : $scope.projects[id].consultant}).then(
       function (project)
     { 
