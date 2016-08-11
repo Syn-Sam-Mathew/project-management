@@ -1,7 +1,7 @@
 var app = angular.module("pmapp",['ngFileUpload']);
 
 //Main Controller
-app.controller("MainController",['$scope','Upload', '$timeout', function ($scope, Upload, $timeout){
+app.controller("MainController",['$scope','Upload', '$timeout','$window', function ($scope, Upload, $timeout,$window){
   
   //Default Ethereum Account
   web3.eth.defaultAccount = web3.eth.accounts[0]
@@ -20,7 +20,7 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
   //Account Naming
   $scope.accounts={
     "Client" : accounts[1],
-    "Provider" : accounts[2],
+    "Vendor" : accounts[2],
     "Management" : accounts[3],
     "Development" : accounts[4] 
   }
@@ -68,15 +68,15 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
     //Ethereum Account Balances 
     $scope.balances={
       "Client" : web3.fromWei(web3.eth.getBalance(accounts[1]).toNumber(),"ether"),
-      "Provider" : web3.fromWei(web3.eth.getBalance(accounts[2]).toNumber(),"ether"),
+      "Vendor" : web3.fromWei(web3.eth.getBalance(accounts[2]).toNumber(),"ether"),
       "Management" : web3.fromWei(web3.eth.getBalance(accounts[3]).toNumber(),"ether"),
       "Development" : web3.fromWei(web3.eth.getBalance(accounts[4]).toNumber(),"ether")
     }
 
   console.log($scope.balances.Client);
   console.log($scope.accounts.Client);
-  console.log($scope.balances.Provider);
-  console.log($scope.accounts.Provider);
+  console.log($scope.balances.Vendor);
+  console.log($scope.accounts.Vendor);
   $scope.$apply();
   }
 
@@ -113,16 +113,16 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
     } 
   }
 
-  //Returns Filelinks by taking name as input
+ //Returns Filelinks by taking name as input
   $scope.getLink = function(name){
     // Create a reference to the file we want to download
     var starsRef = storageRef.child('images/'+name);
-
+    console.log(name);
     // Get the download URL 
     starsRef.getDownloadURL().then(function(url) {
     // Insert url into an <img> tag to "download"
-      //console.log(url);
-      return url;
+      console.log(url);
+       $window.open(url,"_blank");
     }).catch(function(error) {
       switch (error.code) {
         case 'storage/object_not_found':
@@ -178,7 +178,7 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
     //console.log(xvalue);
     
     //Calling PMA startRFP function
-    myethPMA.startRFP($scope.project.name, $scope.project.description, $scope.accounts.Provider,$scope.assignTo, $scope.status, $scope.assets,{ from: xfrom, value: xvalue }).then (
+    myethPMA.startRFP($scope.project.name, $scope.project.description, $scope.accounts.Vendor,$scope.assignTo, $scope.status, $scope.assets,{ from: xfrom, value: xvalue }).then (
     function (project)
     { 
       $scope.project= {}; 
@@ -194,7 +194,7 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
     $scope.projects[data.projectID.toNumber()].description = data.description             //Project Description
     $scope.projects[data.projectID.toNumber()].amount = web3.fromWei(data.amount.toNumber(),"ether");           //Project Amount
     $scope.projects[data.projectID.toNumber()].client = data.client;                      //Project Client
-    $scope.projects[data.projectID.toNumber()].consultant = data.consultant;              //Project Provider
+    $scope.projects[data.projectID.toNumber()].consultant = data.consultant;              //Project Vendor
     $scope.projects[data.projectID.toNumber()].assignTo = data.assignTo.split(",");       //Project Contract Visibility
     $scope.projects[data.projectID.toNumber()].status = data.status.split(",");           //Project Status Array
     $scope.projects[data.projectID.toNumber()].assets = data.assets.split(",");           //Project Asset Array
@@ -202,24 +202,25 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
     $scope.projects[data.projectID.toNumber()].done = "";                                 //Flag to check whether the project is complete
     $scope.projects[data.projectID.toNumber()].phase = {};                                //Object to store the account names and if the have submitted the assets
     $scope.projects[data.projectID.toNumber()].projectAsset = {};                         //Object to store the account names and assets
-    $scope.projects[data.projectID.toNumber()].stage = "Awaiting Provider Approval";      //display the present stage
+    $scope.projects[data.projectID.toNumber()].stage = "Awaiting Vendor Approval";      //display the present stage
     $scope.projects[data.projectID.toNumber()].fileLinks = {};
     
     //Setting phase, assets, filelinks
-    for (var i = 0 ; i < $scope.projects[data.projectID.toNumber()].assignTo.length ; i++){
+    for (var i = 0 ; i < $scope.projects[data.projectID.toNumber()].assignTo.length ; i++){ 
       $scope.projects[data.projectID.toNumber()].phase[$scope.getAccountName($scope.projects[data.projectID.toNumber()].assignTo[i])] = $scope.projects[data.projectID.toNumber()].status[i];
       $scope.projects[data.projectID.toNumber()].projectAsset[$scope.getAccountName($scope.projects[data.projectID.toNumber()].assignTo[i])] = $scope.projects[data.projectID.toNumber()].assets[i];
-      
+      console.log(i);
+      console.log($scope.projects[data.projectID.toNumber()].assets[i]);
       if($scope.projects[data.projectID.toNumber()].assets[i] != ""){
-        var name = $scope.projects[data.projectID.toNumber()].assets[i];
+        /*var name = $scope.projects[data.projectID.toNumber()].assets[i];
         var starsRef = storageRef.child('images/'+name);
-
         // Get the download URL 
         starsRef.getDownloadURL().then(function(url) {
         // Insert url into an <img> tag to "download"
           $scope.projects[data.projectID.toNumber()].fileLinks[name] = url;
-          //console.log(name);
-          //console.log($scope.projects[data.projectID.toNumber()].fileLinks);
+          console.log(name);
+          console.log(i);
+          console.log($scope.projects[data.projectID.toNumber()].fileLinks);
           //console.log($scope.projects[data.projectID.toNumber()].fileLinks[name]);
           $scope.$apply();
         }).catch(function(error) {
@@ -240,21 +241,25 @@ app.controller("MainController",['$scope','Upload', '$timeout', function ($scope
           // Unknown error occurred, inspect the server response
           break;
         }
-      });
+      });*/
       }
     }
-
+    
     //Check the project present stage 
-    if($scope.projects[data.projectID.toNumber()].phase.Provider == "Done"){
+    if($scope.projects[data.projectID.toNumber()].phase.Vendor == "Done"){
       $scope.projects[data.projectID.toNumber()].stage = "Awaiting Project Plan";
+      
       if($scope.projects[data.projectID.toNumber()].phase.Management == "Done"){
         $scope.projects[data.projectID.toNumber()].stage = "Project Under Development";
+        
         if($scope.projects[data.projectID.toNumber()].phase.Development == "Done"){
           $scope.projects[data.projectID.toNumber()].stage = "Client Review";
+          
           if($scope.projects[data.projectID.toNumber()].phase.Client== "Done"){
             $scope.projects[data.projectID.toNumber()].stage = "Completed";
             $scope.endContract(data.name);
           }
+        
         }
       }
     }

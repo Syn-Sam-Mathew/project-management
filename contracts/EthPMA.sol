@@ -8,7 +8,6 @@ contract EthPMA{
 		string assignTo;
 		string status;
 		string assets;
-		string links;
 	}
 	mapping(uint => project) Projects;
 	uint totalProjects;
