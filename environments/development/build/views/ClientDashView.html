@@ -1,5 +1,7 @@
 
 
+<div class="top">
+
 <div class="container-fluid contentHolder">
 	<!-- Deployed Projects Tab-->
 	<div class="row tab" ng-click="setDeployed()">
@@ -7,7 +9,7 @@
 			<img src="./images/contract_deployed.png">
 		</div>
 		<div class="col-md-10 tab-text">
-			<h4>Contracts Deployed</h4>
+			<h4 ng-class="{'yellow' : deployed}">Contracts Deployed</h4>
 		</div>
 		<div class="col-md-1 tab-arrow">
 			<img ng-show="deployed" src="/images/dropdown_two.png"/>
@@ -31,10 +33,10 @@
 	<!-- Pending Projects Tab-->
 	<div class="row tab" ng-click="setPending()">
 		<div class="col-md-1 tab-icon">
-			<img src="./images/contract_deployed.png">
+			<img src="./images/pending_contracts.png">
 		</div>
 		<div class="col-md-10 tab-text">
-			<h4>Pending Contracts</h4>
+			<h4 ng-class="{'yellow' : pending}">Pending Contracts</h4>
 		</div>
 		<div class="col-md-1 tab-arrow">
 			<img ng-show="pending" src="/images/dropdown_two.png"/>
@@ -61,10 +63,10 @@
 	<!-- Completed Projects Tab-->
 	<div class="row tab" ng-click="setCompleted()">
 		<div class="col-md-1 tab-icon">
-			<img src="./images/contract_deployed.png">
+			<img src="./images/completed_contracts.png">
 		</div>
 		<div class="col-md-10 tab-text">
-			<h4>Completed Contracts</h4>
+			<h4 ng-class="{'yellow' : completed}">Completed Contracts</h4>
 		</div>
 		<div class="col-md-1 tab-arrow">
 			<img ng-show="completed" src="/images/dropdown_two.png"/>
@@ -84,5 +86,7 @@
 			</h5>
 		</div>
 	</div>
+
+</div>
 
 </div>

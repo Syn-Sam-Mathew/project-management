@@ -38,24 +38,33 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
 
   //set Completed Flag
   $scope.setCompleted = function(){
-    if ($scope.completed == false)
+    if ($scope.completed == false){
       $scope.completed = true;
+      $scope.deployed = false;
+      $scope.pending = false;
+    }
     else
       $scope.completed = false;
   }
 
   //set Pending Flag
   $scope.setPending = function(){
-    if ($scope.pending == false)
+    if ($scope.pending == false){
       $scope.pending = true;
+      $scope.completed = false;
+      $scope.deployed = false;
+    }
     else
       $scope.pending = false;
   }
 
   //set Deployed Flag 
   $scope.setDeployed = function(){
-    if ($scope.deployed == false)
+    if ($scope.deployed == false){
       $scope.deployed = true;
+      $scope.pending = false;
+      $scope.completed = false;
+    }
     else
       $scope.deployed = false;
   }
