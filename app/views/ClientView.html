@@ -1,0 +1,78 @@
+<div class="container-fluid client">
+	<div class="row">
+		
+		<!-- Left Pane -->
+		<div class="col-md-3">
+			<div class="leftpane">
+				
+				<!-- Client Name -->
+				<div class="row">
+					<div class="col-md-2">
+						<img class="accountIcon" src="/images/client_logo.png"/>
+					</div>
+					<div class="col-md-10">
+						<h3 class="accountName">Client Name</h3>
+					</div>
+				</div>
+				
+				<div class="sidemenu">
+					<!-- Dashboard -->
+					<a ui-sref="client.dashboard"><div class="row button" ng-class="{'selectedButton' : selected == 'ClientDashboard'}" ng-click="setSelected('ClientDashboard')">
+						<div class="col-md-2">
+							<img class="icon" src="/images/dashboard_icon.png"/>
+						</div>
+						<div class="col-md-10">
+							<h4 class="name">Dashboard</h4>
+						</div>
+					</div></a>
+          
+          			<!-- Account -->
+          			<div class="row button" ng-click="setFlag()">
+            			<div class="col-md-2">
+              				<img class="icon" id="menuAccountIcon" src="/images/account_icon.png"/>
+            			</div>
+            			<div class="col-md-8">
+              				<h4 class="name">Account</h4>
+            			</div>
+            			<div class="col-md-2">
+             				 <img ng-show="flag" class="icon arrow" src="/images/dropdown_two.png"/>
+             				 <img ng-show="!flag" class="icon arrow" src="/images/up_arrow.png"/>
+            			</div>
+          			</div>
+          
+          			<!-- Ether Balance -->
+          			<div class="row accountDetails" ng-show="flag">
+           				<div class="col-md-2">
+              				<img class="icon" src="/images/etherbalance_icon.png"/>
+            			</div>
+            			<div class="col-md-8">
+              				<h5 class="name">Ether Balance</h5>
+              				<h5 class="name"> {{balances["Client"]}} </h5>
+            			</div>
+          			</div>
+
+          			<!-- Create Contract  -->
+          			<a ui-sref="client.createContract"><div class="row button" ng-class="{'selectedButton' : selected == 'CreateContract'}" ui-sref="client.createcontract" ng-click="setSelected('CreateContract')">
+            			<div class="col-md-2">
+              				<img class="icon" src="/images/create_contract_icon.png"/>
+            			</div>
+            			<div class="col-md-10">
+              				<h4 class="name">Create Contract</h4>
+            			</div>
+          			</div></a>
+
+
+				</div>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-9">
+			<div ui-view="menuContent"></div>
+		</div>
+
+
+
+	</div>
+</div>

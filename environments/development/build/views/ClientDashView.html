@@ -1,0 +1,88 @@
+
+
+<div class="container-fluid contentHolder">
+	<!-- Deployed Projects Tab-->
+	<div class="row tab" ng-click="setDeployed()">
+		<div class="col-md-1 tab-icon">
+			<img src="./images/contract_deployed.png">
+		</div>
+		<div class="col-md-10 tab-text">
+			<h4>Contracts Deployed</h4>
+		</div>
+		<div class="col-md-1 tab-arrow">
+			<img ng-show="deployed" src="/images/dropdown_two.png"/>
+            <img ng-show="!deployed" src="/images/up_arrow.png"/>
+		</div>
+	</div>
+	
+	<!-- Deployed Projects-->
+	<div ng-show="deployed"> 
+		<div class="projectContainer" ng-repeat="p in projects" ng-hide="p.reject == 'true' || p.done == 'true' ">
+			<h5 class="projectContent"><strong>Project Name</strong>: {{p.name}}</br></h5>
+			<h5 class="projectContent"><strong>Project Description</strong>: {{p.description}}</br></h5>
+			<h5 class="projectContent"><strong>Project Amount</strong>: {{p.amount}}</br></h5>
+			<h5 class="projectContent"><strong>Project Status</strong>: {{p.stage}}</br></h5>
+			<h5 class="projectContent"><strong>Project Assets</strong>:</br></br>
+				<span ng-repeat="(name, value) in p.projectAsset"> {{name}}: <a ng-click ="getLink(value)">{{value}}</a></br></br></span>
+			</h5>
+		</div>
+	</div>
+
+	<!-- Pending Projects Tab-->
+	<div class="row tab" ng-click="setPending()">
+		<div class="col-md-1 tab-icon">
+			<img src="./images/contract_deployed.png">
+		</div>
+		<div class="col-md-10 tab-text">
+			<h4>Pending Contracts</h4>
+		</div>
+		<div class="col-md-1 tab-arrow">
+			<img ng-show="pending" src="/images/dropdown_two.png"/>
+            <img ng-show="!pending" src="/images/up_arrow.png"/>
+		</div>
+	</div>
+
+	<!-- Pending Projects-->
+	<div ng-show="pending">
+		<div class="projectContainer" ng-repeat="p in projects" ng-hide="p.done == 'true' || p.reject == 'true'">
+			<h5 class="projectContent"><strong>Project Name</strong>: {{p.name}}</br></h5>
+			<h5 class="projectContent"><strong>Project Description</strong>: {{p.description}}</br></h5>
+			<h5 class="projectContent"><strong>Project Amount</strong>: {{p.amount}}</br></h5>
+			<h5 class="projectContent"><strong>Project Status</strong>: {{p.stage}}</br></h5>
+			<h5 class="projectContent"><strong>Upload Project Asset</strong>:<button style="padding: 5px;" class="btn btn-default" type="file" ngf-select="selectFile($file, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="5MB">Select File</button>
+                            <br><br>
+                            File:{{f.name}}</h5>
+         	<div class="formInputDiv formButton">
+         		<button class="yellow" ng-show="p.phase.Development == 'Done'" ng-click="accept(p.name,selectedAccount,f.name)">Submit</button>
+         	</div>
+		</div>
+	</div>
+	
+	<!-- Completed Projects Tab-->
+	<div class="row tab" ng-click="setCompleted()">
+		<div class="col-md-1 tab-icon">
+			<img src="./images/contract_deployed.png">
+		</div>
+		<div class="col-md-10 tab-text">
+			<h4>Completed Contracts</h4>
+		</div>
+		<div class="col-md-1 tab-arrow">
+			<img ng-show="completed" src="/images/dropdown_two.png"/>
+            <img ng-show="!completed" src="/images/up_arrow.png"/>
+		</div>
+	</div>
+	
+	<!-- Completed Projects-->
+	<div ng-show="completed">
+		<div class="projectContainer" ng-repeat="p in projects" ng-show="p.done == 'true'">
+			<h5 class="projectContent"><strong>Project Name</strong>: {{p.name}}</br></h5>
+			<h5 class="projectContent"><strong>Project Description</strong>: {{p.description}}</br></h5>
+			<h5 class="projectContent"><strong>Project Amount</strong>: {{p.amount}}</br></h5>
+			<h5 class="projectContent"><strong>Project Status</strong>: {{p.stage}}</br></h5>
+			<h5 class="projectContent"><strong>Project Assets</strong>:</br></br>
+				<span ng-repeat="(name, value) in p.projectAsset"> {{name}}: <a ng-click ="getLink(value)">{{value}}</a></br></br></span>
+			</h5>
+		</div>
+	</div>
+
+</div>

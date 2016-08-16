@@ -1,0 +1,36 @@
+
+
+<div class="container-fluid contentHolder">
+	<form class="createForm">
+            
+            <div class="formInputDiv">
+              <input type="text" class="formInput" placeholder="Project Name" ng-model="project.name">
+            </div>
+            
+            <div class="formInputDiv">
+              <input type="text" class="formInput" placeholder="Amount To Be Paid" ng-model="project.amount">
+			</div>
+            
+            <div class="formInputDiv">
+              <textarea id="description" class="formInput formInputTextArea" placeholder="Project Description" rows="6" ng-model="project.description"></textarea>
+            </div>
+            
+            <div class="formInputDiv zero" ng-click="setFlag1()">
+            	<div class="row formInput">
+              				<div class="col-md-10">Assign To</div>
+              				<div class="col-md-2" id="assignArrow">
+             				 <img ng-show="flag1" src="/images/dropdown_two.png"/>
+             				 <img ng-show="!flag1" src="/images/up_arrow.png"/>
+             				 </div>
+            	</div>		
+            </div>
+            
+            <select id="accountSelect" ng-show="flag1" multiple class="formInput formInputTextArea formSelect" ng-model="project.assignTo">
+            <option ng-repeat="(name,value) in accounts" value="{{value}}">{{name}}</option>
+            </select>
+			
+			<div class="formInputDiv formButton">
+          		<button class="yellow" ng-click="startRFP()">Create Contract</button>
+          	</div>
+    </form>
+</div>

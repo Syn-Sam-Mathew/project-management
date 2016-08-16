@@ -1,43 +1,6 @@
-body {
-  font-family: "Open Sans", sans-serif;
+.client {
   background:url("../images/background.png");
-}
-
-label {
-  display: inline-block;
-}
-
-input {
-  width: 500px;
-  padding: 5px;
-  font-size: 16px;
-}
-
-button {
-  font-size: 15px;
-  padding: 5px;
-}
-
-h1, h2 {
-  display: inline-block;
-  vertical-align: middle;
-  margin-top: 0px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  color: #AAA;
-  font-size: 32px;
-}
-
-h3 {
-  font-weight: normal;
-  color: #AAA;
-  font-size: 24px;
-}
-
-.black {
-  color: black;
+  background-size: cover;
 }
 
 .cell{
@@ -61,4 +24,164 @@ h3 {
 
 .cell-heading:last-child{
    border: 1px solid black;
+}
+
+.name{
+  color:white;
+  font-family: "Helvetica";
+  opacity:1;
+  margin-left: 0px;
+  margin-top: 8%;
+}
+
+.leftpane{
+  margin-top:37px;
+  margin-left: 0px; 
+}
+
+.sidemenu{
+  margin-top: 15%;
+}
+
+
+.icon{
+  opacity:1;
+  margin-top: 80%;
+  margin-left: 60%;
+}
+.selectedButton{
+  background: rgba(0,0,0,0.25);
+  width:100%;
+}
+
+.accountIcon{
+  margin-left: 15%;
+}
+
+.accountName{
+  margin-top: 7%;
+  margin-left: 9%;
+  color:white;
+  font-family: "Helvetica";
+}
+
+.accountDetails{
+  margin-left: 10%;
+  padding-bottom: 30%;
+  
+}
+
+.button{
+  height:50px;
+  width:100%;
+}
+
+#menuAccountIcon{
+  margin-top: 50%;
+}
+
+.contentHolder{
+  background: rgba(255,255,255,0.10);
+  margin-left: -3%;
+  margin-top: 5%;
+  margin-right: 5%;
+  height: 96vh;
+  border-radius: 15px;
+}
+
+.createForm{
+  margin-top: 5%;
+}
+
+.formInput{
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color:rgba(255,255,255,0.5);
+    width: 60%;
+    margin-left: 20%;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    font-family: "Helvetica";
+    padding: 1%;
+}
+
+.formInputDiv{
+  padding:1%;
+  font-size:12pt;
+}
+
+.formInputTextArea{
+  background: rgba(0,0,0,0.3);
+  font-family: "Helvetica";
+  margin-top: 2%;
+}
+
+#assignArrow{
+  margin-top: 2%;
+}
+
+.arrow{
+  margin-top: 110%;
+}
+
+.formSelect{
+ margin-top: 0px;
+ font-family: "Helvetica";
+}
+
+.zero{
+  padding-bottom:0%;
+}
+
+.yellow{
+  background: url(./images/yellow_button.png);
+  font-family: "Helvetica";
+  color:black;
+  padding:7px;
+  margin-left:68%;
+  border:0;
+  border-radius: 2px;
+}
+
+.formButton{
+  padding:10%;
+}
+
+.tab{
+  height: 55px;
+  background: rgba(255,255,255,0.15);
+  color:white;
+  font-family: "Helvetica";
+  margin-top: 3px;
+}
+
+.tab:first-child{
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin-top:0px;  
+}
+
+.tab-icon{
+  margin-top: 15px;
+  margin-left:3%;
+}
+
+.tab-arrow{
+  margin-top:2%;
+}
+
+.tab-text{
+  margin-left: -3%;
+  margin-top: 10px;
+}
+
+.projectContainer{
+  margin: 2%;
+  background: rgba(0, 0, 0, 0.2) none repeat scroll 0% 0%;
+  color: white;
+  font-family: "Helvetica";
+}
+
+.projectContent{
+  padding:1%;
 }
