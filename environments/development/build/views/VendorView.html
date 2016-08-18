@@ -1,2 +1,65 @@
 
 
+<div class="container-fluid vendor">
+	
+	<div class="row">
+		<a ui-sref="home">
+			<div class="col-md-1" id="vendor">
+				<img src="./images/vendor_logo.png">
+			</div>
+			<div class="col-md-3">
+				<h4 class="name"> Vendor </h4>
+			</div>
+		</a>
+	</div>
+
+	<div class="row" id="vendorContainer">
+
+		<div class="col-md-3" id="sideMenuContainer">
+			<div class="sidemenu" id="vendorSideMenu">
+					<!-- Dashboard -->
+					<a ui-sref="vendor.dashboard"><div class="row vendorButton" ng-class="{'selectedButton' : selected == 'VendorDashboard'}" ng-click="setSelected('VendorDashboard')">
+						<div class="col-md-2">
+							<img class="icon" id="menuDashIcon" src="/images/dashboard_icon.png"/>
+						</div>
+						<div class="col-md-9">
+							<h4 class="name">Dashboard</h4>
+						</div>
+						<div class="col-md-1" id="yellowDiv"></div>
+					</div></a>
+          
+          			<!-- Account -->
+          			<div class="row vendorButton" ng-click="setVendorAccount()">
+            			<div class="col-md-2">
+              				<img class="icon" id="menuAccountIcon" src="/images/account_icon.png"/>
+            			</div>
+            			<div class="col-md-8">
+              				<h4 class="name">Account</h4>
+            			</div>
+            			<div class="col-md-2">
+             				 <img ng-show="vendorAccount" class="icon arrow" src="/images/dropdown_two.png"/>
+             				 <img ng-show="!vendorAccount" class="icon arrow" src="/images/up_arrow.png"/>
+            			</div>
+          			</div>
+          
+          			<!-- Ether Balance -->
+          			<div class="row accountDetails" ng-show="vendorAccount">
+           				<div class="col-md-2">
+              				<img class="icon" src="/images/etherbalance_icon.png"/>
+            			</div>
+            			<div class="col-md-8">
+              				<h5 class="name">Ether Balance</h5>
+              				<h5 class="name"> {{balances["Vendor"]}} </h5>
+            			</div>
+          			</div>
+
+			</div>
+		</div>
+
+		<div class="col-md-9">
+			<div ui-view="menuContent"></div>
+		</div>
+
+	</div>
+
+</div>

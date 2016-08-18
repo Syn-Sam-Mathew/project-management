@@ -9,17 +9,19 @@
 				
 				<!-- Client Name -->
 				<div class="row">
-					<div class="col-md-2">
-						<img class="accountIcon" src="/images/client_logo.png"/>
-					</div>
-					<div class="col-md-10">
-						<h3 class="accountName">Client Name</h3>
-					</div>
+					<a ui-sref="home">
+						<div class="col-md-2">
+							<img class="accountIcon" src="/images/client_logo.png"/>
+						</div>
+						<div class="col-md-10">
+							<h3 class="accountName">Client Name</h3>
+						</div>
+					</a>
 				</div>
 				
 				<div class="sidemenu">
 					<!-- Dashboard -->
-					<a ui-sref="client.dashboard"><div class="row button" ng-class="{'selectedButton' : selected == 'ClientDashboard'}" ng-click="setSelected('ClientDashboard')">
+					<a ui-sref="client.dashboard"><div class="row clientButton" ng-class="{'selectedButton' : selected == 'ClientDashboard'}" ng-click="setSelected('ClientDashboard')">
 						<div class="col-md-2">
 							<img class="icon" src="/images/dashboard_icon.png"/>
 						</div>
@@ -29,7 +31,7 @@
 					</div></a>
           
           			<!-- Account -->
-          			<div class="row button" ng-click="setFlag()">
+          			<div class="row clientButton" ng-click="setFlag()">
             			<div class="col-md-2">
               				<img class="icon" id="menuAccountIcon" src="/images/account_icon.png"/>
             			</div>
@@ -54,7 +56,7 @@
           			</div>
 
           			<!-- Create Contract  -->
-          			<a ui-sref="client.createContract"><div class="row button" ng-class="{'selectedButton' : selected == 'CreateContract'}" ui-sref="client.createcontract" ng-click="setSelected('CreateContract')">
+          			<a ui-sref="client.createContract"><div class="row clientButton" ng-class="{'selectedButton' : selected == 'CreateContract'}" ui-sref="client.createcontract" ng-click="setSelected('CreateContract')">
             			<div class="col-md-2">
               				<img class="icon" src="/images/create_contract_icon.png"/>
             			</div>

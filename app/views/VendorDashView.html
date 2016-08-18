@@ -1,0 +1,113 @@
+<div class="container-fluid">
+	
+	<div class="row" id="dashNameContainer">
+						<div class="col-md-2">
+							<img id="dashViewIcon" src="/images/dashboard_icon.png"/>
+						</div>
+						<div class="col-md-10">
+							<h4 class="name" id="dashViewName">Dashboard</h4>
+						</div>
+	</div>
+
+	<div class="row">
+
+		<div class="col-md-8">
+			
+			<div class="row Container">
+				
+				<div class="row">
+					<div class="col-md-1 iconContainer">
+						<img class="tabIcon" src="./images/pending_contracts.png">
+					</div>
+
+					<div class="col-md-10 nameContainer">
+						<h4 class="name tabName">Pending Contracts</h4>
+					</div>
+				</div>
+				<div class="projectsContainer">
+				<div class="projectContainer" ng-repeat="p in projects" ng-hide="p.phase.Vendor == 'Done' || p.reject == 'true'">
+					<h5 class="projectContent"><strong>Project Name</strong>: {{p.name}}</br></h5>
+					<h5 class="projectContent"><strong>Project Description</strong>: {{p.description}}</br></h5>
+					<h5 class="projectContent"><strong>Project Amount</strong>: {{p.amount}}</br></h5>
+					<h5 class="projectContent"><strong>Project Status</strong>: {{p.stage}}</br></h5>
+					<h5 class="projectContent"><strong>Upload Project Asset</strong>:<button class="yellowButton" id="select" type="file" ngf-select="selectFile($file, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="5MB">Select File</button>
+                            <br><br>
+                            File:{{f.name}}</h5>
+         			<div class="row" id="buttonHolder">
+         			
+         				<div class="col-md-offset-8 col-md-2 customButton" ng-click="reject(p.name)" >
+         					<img id="rejectButton" src="./images/reject_icon.png" >
+         				</div>
+
+         				<div class="col-md-2 customButton" ng-click="accept(p.name,selectedAccount,f.name)">
+         					<img id="acceptButton" src="./images/accept_icon.png">
+         				</div>
+         			
+         			</div>
+				</div>
+				</div>
+			
+			</div>
+
+			<div class="row Container">
+				
+				<div class="row">
+					
+					<div class="col-md-1 iconContainer">
+						<img class="tabIcon" id="activeIcon" src="./images/active_icon.png">
+					</div>
+
+					<div class="col-md-10 nameContainer">
+						<h4 class="name tabName">Active Contracts</h4>
+					</div>
+				
+				</div>
+				<div class="projectsContainer">
+				<div class="projectContainer" ng-repeat="p in projects" ng-show="p.phase.Vendor == 'Done' && p.reject != 'true' && p.done != 'true'">
+						<h5 class="projectContent"><strong>Project Name</strong>: {{p.name}}</br></h5>
+						<h5 class="projectContent"><strong>Project Description</strong>: {{p.description}}</br></h5>
+						<h5 class="projectContent"><strong>Project Amount</strong>: {{p.amount}}</br></h5>
+						<h5 class="projectContent"><strong>Project Status</strong>: {{p.stage}}</br></h5>
+						<h5 class="projectContent"><strong>Project Assets</strong>:</br></br>
+							<span ng-repeat="(name, value) in p.projectAsset"> {{name}}: <a ng-click ="getLink(value)">{{value}}</a></br></br></span>
+						</h5>
+				</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="col-md-4">
+			
+			<div class="row Container" id="completedContainer">
+				
+				<div class="row">
+					
+					<div class="col-md-1 iconContainer" id="completedIconContainer">
+						<img class="tabIcon" id="comletedIcon" src="./images/completed_contracts.png">
+					</div>
+
+					<div class="col-md-10 nameContainer" id="completedNameContainer">
+						<h4 class="name tabName" id="completedName" >Completed Contracts</h4>
+					</div>
+				
+				</div>
+					<div id="completedProjectsContainer">
+					<div class="projectContainer" ng-repeat="p in projects" ng-show="p.done == 'true'">
+						<h5 class="projectContent"><strong>Project Name</strong>: {{p.name}}</br></h5>
+						<h5 class="projectContent"><strong>Project Description</strong>: {{p.description}}</br></h5>
+						<h5 class="projectContent"><strong>Project Amount</strong>: {{p.amount}}</br></h5>
+						<h5 class="projectContent"><strong>Project Status</strong>: {{p.stage}}</br></h5>
+						<h5 class="projectContent"><strong>Project Assets</strong>:</br></br>
+							<span ng-repeat="(name, value) in p.projectAsset"> {{name}}: <a ng-click ="getLink(value)">{{value}}</a></br></br></span>
+						</h5>
+					</div>
+					</div>
+			</div>
+				
+		</div>
+
+	</div>
+
+</div>

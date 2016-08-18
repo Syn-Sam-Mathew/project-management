@@ -1,0 +1,40 @@
+<div class ="container-fluid">
+	
+	<div class="row manageMenu">
+		
+		<a ui-sref="home">
+			<div class="col-md-1">
+				<img id="manageIcon" src="./images/developer_logo.png">
+			</div>
+			
+			<div class= "col-md-4">
+				<h4 class="name" id="manageName">Developer</h4>
+			</div>		
+		</a>
+
+		<div class="col-md-3 pendingContainer ">
+			<a ui-sref="development.pending">
+				<div class="row manageButton" ng-class="{'selectedButton' : selected == 'DeveloperPending'}" ng-click="setSelected('DeveloperPending')">
+					<h5 class="name">Pending Contracts</h5>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-md-2 activeContainer">
+			<a ui-sref="development.active">
+				<div class="row manageButton" ng-class="{'selectedButton' : selected == 'DeveloperActive'}" ng-click="setSelected('DeveloperActive')">
+					<h5 class="name active">Active Contracts</h5>
+				</div>
+			</a>
+		</div>
+
+
+	</div>
+
+	<div class="row">
+		
+		<div ui-view="menuContent"></div>
+
+	</div>
+
+</div>

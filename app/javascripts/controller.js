@@ -1,6 +1,15 @@
 //Main Controller
 app.controller("MainController",['$scope','Upload', '$timeout','$window','$state', function ($scope, Upload, $timeout,$window,$state){
   
+
+   $scope.$on('scrollbar.show', function(){
+      console.log('Scrollbar show');
+    });
+    $scope.$on('scrollbar.hide', function(){
+      console.log('Scrollbar hide');
+    });
+
+
   //Default Ethereum Account
   web3.eth.defaultAccount = web3.eth.accounts[0]
 
@@ -9,8 +18,9 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
   $scope.reject = "";       //Project Rejected flag
   $scope.done = "";         //Project Completed flag
   $scope.downloadURL = "";  //Asset download link 
-  $scope.flag = false;      //flag to display balance
+  $scope.flag = false;      //flag to display client balance
   $scope.flag1 = false;     //flag to display assignTo
+  $scope.vendorAccount = false      //flag to display vendor balance 
   $scope.completed = false;   //flag to display completed
   $scope.pending = false;     //flag to display pending
   $scope.deployed = false;    //flag to display deployed
@@ -29,6 +39,14 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
     "Development" : accounts[4] 
   }
   
+  //set Vendor Account Flag
+  $scope.setVendorAccount= function(){
+    if ($scope.vendorAccount == false)
+      $scope.vendorAccount = true;
+    else
+      $scope.vendorAccount = false;
+  }
+
   //set Selected
   $scope.setSelected = function(arg){
     $scope.selected = arg;
@@ -206,6 +224,7 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
   //Selecting asset file  
   $scope.selectFile = function(f, errFiles) {
         $scope.f = f;
+        console.log($scope.f.name);
     }
 
 
@@ -246,7 +265,8 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
 
     $state.go('client.dashboard');
     $scope.setSelected('ClientDashboard');
-    $scope.deployed="true";
+    $scope.deployed = false;
+    $scope.setDeployed();
   }
 
   //Getting data from PMA 

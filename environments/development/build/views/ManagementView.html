@@ -1,2 +1,42 @@
 
 
+<div class ="container-fluid">
+	
+	<div class="row manageMenu">
+		
+		<a ui-sref="home">
+			<div class="col-md-1">
+				<img id="manageIcon" src="./images/developer_logo.png">
+			</div>
+			
+			<div class= "col-md-4">
+				<h4 class="name" id="manageName">Management</h4>
+			</div>		
+		</a>
+
+		<div class="col-md-3 pendingContainer ">
+			<a ui-sref="management.pending">
+				<div class="row manageButton" ng-class="{'selectedButton' : selected == 'ManagementPending'}" ng-click="setSelected('ManagementPending')">
+					<h5 class="name">Pending Contracts</h5>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-md-2 activeContainer">
+			<a ui-sref="management.active">
+				<div class="row manageButton" ng-class="{'selectedButton' : selected == 'ManagementActive'}" ng-click="setSelected('ManagementActive')">
+					<h5 class="name active">Active Contracts</h5>
+				</div>
+			</a>
+		</div>
+
+
+	</div>
+
+	<div class="row">
+		
+		<div ui-view="menuContent"></div>
+
+	</div>
+
+</div>
