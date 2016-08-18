@@ -1,17 +1,7 @@
 
 
 //Main Controller
-app.controller("MainController",['$scope','Upload', '$timeout','$window','$state', function ($scope, Upload, $timeout,$window,$state){
-  
-
-   $scope.$on('scrollbar.show', function(){
-      console.log('Scrollbar show');
-    });
-    $scope.$on('scrollbar.hide', function(){
-      console.log('Scrollbar hide');
-    });
-
-
+app.controller("MainController",['$scope','Upload', '$timeout','$window','$state', function ($scope, Upload, $timeout,$window,$state){  
   //Default Ethereum Account
   web3.eth.defaultAccount = web3.eth.accounts[0]
 
@@ -38,7 +28,7 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
     "Client" : accounts[1],
     "Vendor" : accounts[2],
     "Management" : accounts[3],
-    "Development" : accounts[4] 
+    "Developer" : accounts[4] 
   }
   
   //set Vendor Account Flag
@@ -148,7 +138,7 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
       "Client" : web3.fromWei(web3.eth.getBalance(accounts[1]).toNumber(),"ether"),
       "Vendor" : web3.fromWei(web3.eth.getBalance(accounts[2]).toNumber(),"ether"),
       "Management" : web3.fromWei(web3.eth.getBalance(accounts[3]).toNumber(),"ether"),
-      "Development" : web3.fromWei(web3.eth.getBalance(accounts[4]).toNumber(),"ether")
+      "Developer" : web3.fromWei(web3.eth.getBalance(accounts[4]).toNumber(),"ether")
     }
 
   console.log($scope.balances.Client);
@@ -224,9 +214,10 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
   }
 
   //Selecting asset file  
-  $scope.selectFile = function(f, errFiles) {
-        $scope.f = f;
-        console.log($scope.f.name);
+  $scope.selectFile = function(f,i, errFiles) {
+        $scope.f=[];
+        $scope.f[i] = f;
+        console.log($scope.f[i].name);
     }
 
 
@@ -337,7 +328,7 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
       if($scope.projects[data.projectID.toNumber()].phase.Management == "Done"){
         $scope.projects[data.projectID.toNumber()].stage = "Project Under Development";
         
-        if($scope.projects[data.projectID.toNumber()].phase.Development == "Done"){
+        if($scope.projects[data.projectID.toNumber()].phase.Developer == "Done"){
           $scope.projects[data.projectID.toNumber()].stage = "Client Review";
           
           if($scope.projects[data.projectID.toNumber()].phase.Client== "Done"){
@@ -354,12 +345,12 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
   }
 
   //Submitting Assets 
-  $scope.accept = function(name,value,asset){
-    //console.log(name,value,asset);
+  $scope.accept = function(name,value,asset,i){
+    console.log(name,value,asset,i);
     var id = $scope.getId(name);
     //console.log(id);
 
-    var file = $scope.f;                          //Assigning File
+    var file = $scope.f[i];                          //Assigning File
 
 
     // Create the file metadata

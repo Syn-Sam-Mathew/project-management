@@ -1,4 +1,4 @@
-var app=angular.module('pmapp',['ui.router','ngFileUpload','ngScrollbar']);
+var app=angular.module('pmapp',['ui.router','ngFileUpload']);
 
 // Routing 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -62,12 +62,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
       } 
     }
   })
-    .state('development', {
-    url: '/development',
+    .state('developer', {
+    url: '/developer',
     abstract: true,
-    templateUrl: 'views/DevelopmentView.html'
+    templateUrl: 'views/DeveloperView.html'
   })
-    .state('development.active', {
+    .state('developer.active', {
     url: '/active',
     views: {
       menuContent:{
@@ -75,7 +75,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
       }
     }
   })
-    .state('development.pending', {
+    .state('developer.pending', {
     url: '/pending',
     views: {
       menuContent:{

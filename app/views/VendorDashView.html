@@ -12,7 +12,7 @@
 	<div class="row">
 
 		<div class="col-md-8">
-			
+			<!-- Pending Contracts -->
 			<div class="row Container">
 				
 				<div class="row">
@@ -30,16 +30,16 @@
 					<h5 class="projectContent"><strong>Project Description</strong>: {{p.description}}</br></h5>
 					<h5 class="projectContent"><strong>Project Amount</strong>: {{p.amount}}</br></h5>
 					<h5 class="projectContent"><strong>Project Status</strong>: {{p.stage}}</br></h5>
-					<h5 class="projectContent"><strong>Upload Project Asset</strong>:<button class="yellowButton" id="select" type="file" ngf-select="selectFile($file, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="5MB">Select File</button>
+					<h5 class="projectContent"><strong>Upload Project Asset</strong>:<button class="yellowButton" id="select" type="file" ngf-select="selectFile($file, p.projectID, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="5MB">Select File</button>
                             <br><br>
-                            File:{{f.name}}</h5>
+                            File:{{f[p.projectID].name}}</h5>
          			<div class="row" id="buttonHolder">
          			
          				<div class="col-md-offset-8 col-md-2 customButton" ng-click="reject(p.name)" >
          					<img id="rejectButton" src="./images/reject_icon.png" >
          				</div>
 
-         				<div class="col-md-2 customButton" ng-click="accept(p.name,selectedAccount,f.name)">
+         				<div class="col-md-2 customButton" ng-click="accept(p.name,accounts['Vendor'],f[p.projectID].name,p.projectID)">
          					<img id="acceptButton" src="./images/accept_icon.png">
          				</div>
          			
@@ -48,7 +48,8 @@
 				</div>
 			
 			</div>
-
+			
+			<!-- Active Contracts -->
 			<div class="row Container">
 				
 				<div class="row">
@@ -79,7 +80,7 @@
 		</div>
 
 		<div class="col-md-4">
-			
+			<!-- Completed Contracts -->
 			<div class="row Container" id="completedContainer">
 				
 				<div class="row">

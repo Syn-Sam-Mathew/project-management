@@ -265,12 +265,12 @@
  }
 
  .clientProjectsContainer{
-  overflow-y :scroll; 
+  overflow-y :auto; 
   height: 405px;
 }
 
 .projectsContainer{
-  overflow-y :scroll; 
+  overflow-y :auto; 
   height: 205px;
 }
 
@@ -355,7 +355,7 @@
 
 #completedProjectsContainer{
   height: 456px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #yellowDiv{
@@ -401,7 +401,7 @@
 }
 
 .manageProjectsContainer{
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 90vh;
 }
 
@@ -412,6 +412,7 @@
   font-family: "Helvetica";
   width: 65%;
   padding: 2%;
+  margin-bottom: 1%;
 }
 
 .managePendingName{

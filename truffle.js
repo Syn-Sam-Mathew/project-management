@@ -28,8 +28,8 @@ module.exports = {
     "views/ManagementPendingView.html": [
       "views/ManagementPendingView.html"
     ],
-    "views/DevelopmentView.html": [
-      "views/DevelopmentView.html"
+    "views/DeveloperView.html": [
+      "views/DeveloperView.html"
     ],
     "views/DeveloperActiveView.html": [
       "views/DeveloperActiveView.html"

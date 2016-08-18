@@ -1,25 +1,25 @@
 <div class="container-fluid devmanage">
 	
-	<div class="row" id="managePendingContainer">
+	<div class="row managePendingContainer">
 						<div class="col-md-2">
-							<img id="dashViewIcon" src="/images/active_icon_1.png"/>
+							<img id="dashViewIcon" src="/images/pending_black.png"/>
 						</div>
 						<div class="col-md-10">
-							<h4 id="managePendingName">Pending Contracts</h4>
+							<h4 class="managePendingName">Pending Contracts</h4>
 						</div>
 	</div>
 
 	<div class="manageProjectsContainer">
-		<div class="manageProjectContainer" ng-repeat="p in projects" ng-hide="selectedAccount != accounts.Management || p.phase.Management == 'Done' || p.reject == 'true'">
+		<div class="manageProjectContainer" ng-repeat="p in projects" ng-hide="p.phase.Management == 'Done' || p.reject == 'true'">
 			<h5 class="projectContent"><strong>Project Name</strong>: {{p.name}}</br></h5>
 			<h5 class="projectContent"><strong>Project Description</strong>: {{p.description}}</br></h5>
 			<h5 class="projectContent"><strong>Project Amount</strong>: {{p.amount}}</br></h5>
 			<h5 class="projectContent"><strong>Project Status</strong>: {{p.stage}}</br></h5>
-			<h5 class="projectContent"><strong>Upload Project Asset</strong>:<button class="yellowButton" id="select" type="file" ngf-select="selectFile($file, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="5MB">Select File</button>
+			<h5 class="projectContent" ng-show="p.phase.Vendor == 'Done'"><strong>Upload Project Asset</strong>:<button class="yellowButton" id="select" type="file" ngf-select="selectFile($file, p.projectID, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="5MB">Select File</button>
                             <br><br>
-                            File:{{f.name}}</h5>
+                            File:{{f[p.projectID].name}}</h5>
          	<div class="formInputDiv">
-         		<button class="yellowButton" ng-show="p.phase.Vendor == 'Done'" ng-show="p.phase.Management == 'Done'" id="select" ng-click="accept(p.name,selectedAccount,f.name)">Submit</button>
+         		<button class="yellowButton" ng-show="p.phase.Vendor == 'Done'" id="select" ng-click="accept(p.name,accounts['Management'],f[p.projectID].name,p.projectID)">Submit</button>
          	</div>
 		</div>
 	</div>
