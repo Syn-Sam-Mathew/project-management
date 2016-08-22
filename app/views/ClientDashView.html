@@ -52,8 +52,9 @@
 			<h5 class="projectContent" ng-show="p.phase.Developer == 'Done'"><strong>Upload Project Asset</strong>:<button class="yellowButton" id="select" type="file" ngf-select="selectFile($file,p.projectID, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="5MB">Select File</button>
                             <br><br>
                             File:{{f[p.projectID].name}}</h5>
-         	<div class="formInputDiv">
-         		<button class="yellowButton" ng-show="p.phase.Developer == 'Done'" id="select" ng-click="accept(p.name,accounts['Client'],f[p.projectID].name,p.projectID)">Submit</button>
+         	<div class="formInputDiv" ng-show="p.phase.Developer == 'Done'">
+         		<button class="yellowButton" id="select" ng-click="accept(p.name,accounts['Client'],f[p.projectID].name,p.projectID)">Submit</button>
+         		<h5 class="err">{{err[p.projectID]}}</h5>
          	</div>
 		</div>
 	</div>

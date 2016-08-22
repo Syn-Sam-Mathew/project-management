@@ -1,8 +1,56 @@
 
 
+<div class="container-fluid home">	
+	
+	<div id="blockchainIcon">
+		<img src="../images/blockchain_icon_1.png">
+	</div>
+	
+	<div id="caseDesc" ng-show="!blocks.Client">
+		</br>
+		</br>
+		<u><h3>Usecase Workflow</h3></u>
+		<h4><ul>
+			<li>Client creates a contract</li>
+			<li>Vendor approves or rejects the contract</li>
+			<li>Manager uploads the project plan</li>
+			<li>Developer completes the project</li>
+			<li>Client tests and once satisfied accepts the project</li>
+		</ul>
+		</br>
+		</br>
+		Initially the Blockchain is empty and as each transaction is completed</br> the blocks keep adding into the blockchain.
+		</br>
+		</br>
+		</br>
+		Click on the blinking icon to start the workflow.
+		</h4> 
+	</div>
+
+	<div id="clientImage" class="selectedHomeImage" ng-class="{'pulse': !blocks.Client || (!blocks.Complete && blocks.Developer)}">
+		<a ui-sref="client.dashboard" ng-click="setSelected('ClientDashboard')"><img src="../images/client_selected.png"></a>
+	</div>
+
+	<div class="selectedHomeImage" ng-class="{'pulse': !blocks.Vendor && blocks.Client, 'dim' : !blocks.Vendor}">
+		<a ui-sref="vendor.dashboard" ng-click="setSelected('VendorDashboard')"><img src="../images/vendor_selected.png"></a>
+	</div>
+	
+	
+	<div class="selectedHomeImage" ng-class="{'pulse': blocks.Vendor && !blocks.Management, 'dim' : !blocks.Management}">
+		<a ui-sref="management.pending" ng-click="setSelected('ManagementPending')"><img src="../images/management_selected.png"></a>
+	</div>
+	
+	
+	<div class="selectedHomeImage" ng-class="{'pulse': blocks.Management && !blocks.Developer, 'dim' : !blocks.Developer}">
+		<a ui-sref="developer.pending" ng-click="setSelected('DeveloperPending')"><img src="../images/developer_selected.png"></a>
+	</div>
+
+	<div>
+		<img id="firstCube" src="../images/cube1.png" ng-show="blocks.Client">
+		<img id="secondCube" src="../images/cube1.png" ng-show="blocks.Vendor">
+		<img id="thirdCube" src="../images/cube1.png" ng-show="blocks.Management">
+		<img id="fourthCube" src="../images/cube1.png" ng-show="blocks.Developer">
+		<img id="fifthCube" src="../images/cube1.png" ng-show="blocks.Complete">
+	</div>
+
 <div>
-<a ui-sref="client.dashboard" ng-click="setSelected('ClientDashboard')">Client</a>
-<a ui-sref="vendor.dashboard" ng-click="setSelected('VendorDashboard')">Vendor</a>
-<a ui-sref="management.pending" ng-click="setSelected('ManagementPending')">Management</a>
-<a ui-sref="developer.pending" ng-click="setSelected('DeveloperPending')">Developer</a>
-</div>

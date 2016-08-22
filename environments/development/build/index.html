@@ -8,15 +8,19 @@
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link href="./app.css" rel='stylesheet' type='text/css'>
+  <link href="./ng-scrollbar.min.css" rel='stylesheet' type='text/css'>
 
   <!-- Angular JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
   <script src="./ng-scrollbar.js"></script>
   <!-- Ui Router-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.0-alpha0/angular-ui-router.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   
   <script src="./app.js"></script>
   <script src="./controller.js"></script>
+  <script src="./enscroll-0.6.2.min.js"></script>
 
 
   <!-- shim is needed to support non-HTML5 FormData browsers (IE8-9)-->
@@ -36,6 +40,7 @@
       storageBucket: "projectmanagement-6fdc0.appspot.com",
     };
     firebase.initializeApp(config);
+
   </script>
 </head>
 <body ng-app="pmapp" ng-controller="MainController">

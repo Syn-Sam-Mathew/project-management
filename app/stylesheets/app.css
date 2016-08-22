@@ -1,3 +1,26 @@
+a:link {
+    text-decoration: none;
+    color:rgba(0,0,0,0);
+}
+
+/* visited link */
+a:visited {
+    text-decoration: none;
+    color:rgba(0,0,0,0);
+}
+
+/* mouse over link */
+a:hover {
+    text-decoration: none;
+    color:rgba(0,0,0,0);
+}
+
+/* selected link */
+a:active {
+    text-decoration: none;
+    color:rgba(0,0,0,0);
+}
+
 .devmanage{
   background:url("../images/manage_bg.png");
   background-size: cover;
@@ -195,6 +218,7 @@
   background: rgba(0, 0, 0, 0.2);
   color: white;
   font-family: "Helvetica";
+  padding:5%;
 }
 
 .projectContent{
@@ -268,8 +292,9 @@
 }
 
 .projectsContainer{
-  overflow-y :auto; 
-  height: 205px;
+  overflow-y :auto;
+  overflow-x: hidden; 
+  height: 200px;
 }
 
 .iconContainer{
@@ -420,4 +445,92 @@
 
 .managePendingContainer{
   margin-left: 18%;
+}
+
+.home{
+  background: url(../images/home_background.png);
+  background-size: cover;
+  height:100vh;
+  overflow: hidden;
+}
+
+#blockchainIcon{
+  padding: 2%;
+}
+
+#clientImage{
+  margin-left:75%;
+  margin-top: -7%;
+  border-radius: 50%;
+}
+
+.homeImage{
+  margin-left:75%;
+  margin-top:5%;
+}
+
+.selectedHomeImage{
+  margin-left: 75%;
+  margin-top: 5%;  
+}
+
+#firstCube{
+  transform: translate(180%, -200%);
+}
+
+#secondCube{
+  transform:translate(75%, -262%);
+}
+
+#thirdCube{
+  transform: translate(-29%, -325%);
+}
+
+#fourthCube{
+  transform: translate(-133%, -387%);
+}
+
+#fifthCube{
+  transform: translate(-238%, -449%);
+}
+
+.pulse{
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity:0;
+  }
+  50% {
+      opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+#caseDesc{
+  margin-left:2%; 
+  float:left;
+  color:rgba(255,255,255,0.5);
+}
+
+.dim{
+  opacity: 0.7;
+}
+
+.err{
+  color:red;
+  margin:auto;
+}
+
+#clientErr{
+  margin-left:25%;
+  padding:5%;
+  margin-top: -10%
+}
+
+#vendorErr{
+  margin-left: 10%;
 }

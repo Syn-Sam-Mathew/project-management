@@ -43,8 +43,8 @@ module.exports = {
     "controller.js":[
       "javascripts/controller.js"
     ],
-    "ng-scrollbar.js":[
-      "javascripts/ng-scrollbar.js"
+    "enscroll-0.6.2.min.js":[
+      "javascripts/enscroll-0.6.2.min.js"
     ],
     "app.css": [
       "stylesheets/app.css"

@@ -15,11 +15,20 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
   $scope.pending = false;     //flag to display pending
   $scope.deployed = false;    //flag to display deployed
   $scope.selected = "";
+  $scope.err=[];
   var accounts = web3.eth.accounts;                       //Ethereum Accounts
   var storageRef = firebase.storage().ref();              //Assigning storage reference
   $scope.selectedAccount = accounts[1];                   //Default Selected Account
   var ethPMA = EthPMA.at(EthPMA.deployed_address);        //PMA deployed address
   var myethPMA = ethPMA;                                  
+
+  $scope.blocks={
+    "Client" : false,
+    "Vendor" : false,
+    "Management" : false,
+    "Developer" : false,
+    "Complete" : false
+  }
 
   //Account Naming
   $scope.accounts={
@@ -221,6 +230,12 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
 
   //Starting project contract
   $scope.startRFP = function(){
+    if ($scope.project.assignTo == undefined){
+      $scope.err1="Please assign visibility";
+    }
+    else if($scope.project.amount > 0)
+    {
+    $scope.err1="";
     //console.log($scope.project);
     $scope.flag1=false;
     $scope.project.status = [];   //project status array
@@ -252,12 +267,17 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
     { 
       $scope.project= {}; 
       console.log('Action created: ', project);
+      $state.go('client.dashboard');
+      $scope.setSelected('ClientDashboard');
+      $scope.deployed = false;
+      $scope.setDeployed();
+      $scope.blocks['Client']=true;
     });
-
-    $state.go('client.dashboard');
-    $scope.setSelected('ClientDashboard');
-    $scope.deployed = false;
-    $scope.setDeployed();
+  }
+  else{
+     $scope.err1="Amount is not number";
+      console.log($scope.err1);
+  }
   }
 
   //Getting data from PMA 
@@ -285,38 +305,6 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
       $scope.projects[data.projectID.toNumber()].projectAsset[$scope.getAccountName($scope.projects[data.projectID.toNumber()].assignTo[i])] = $scope.projects[data.projectID.toNumber()].assets[i];
       console.log(i);
       console.log($scope.projects[data.projectID.toNumber()].assets[i]);
-      if($scope.projects[data.projectID.toNumber()].assets[i] != ""){
-        /*var name = $scope.projects[data.projectID.toNumber()].assets[i];
-        var starsRef = storageRef.child('images/'+name);
-        // Get the download URL 
-        starsRef.getDownloadURL().then(function(url) {
-        // Insert url into an <img> tag to "download"
-          $scope.projects[data.projectID.toNumber()].fileLinks[name] = url;
-          console.log(name);
-          console.log(i);
-          console.log($scope.projects[data.projectID.toNumber()].fileLinks);
-          //console.log($scope.projects[data.projectID.toNumber()].fileLinks[name]);
-          $scope.$apply();
-        }).catch(function(error) {
-          switch (error.code) {
-           case 'storage/object_not_found':
-          // File doesn't exist
-          break;
-
-          case 'storage/unauthorized':
-          // User doesn't have permission to access the object
-          break;
-
-          case 'storage/canceled':
-          // User canceled the upload
-          break;
-
-          case 'storage/unknown':
-          // Unknown error occurred, inspect the server response
-          break;
-        }
-      });*/
-      }
     }
     
     //Check the project present stage 
@@ -344,6 +332,14 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
 
   //Submitting Assets 
   $scope.accept = function(name,value,asset,i){
+    if($scope.f == undefined){
+      $scope.err[i]="Please select a file before accepting/ submitting";
+    }
+    else if($scope.f[i] == undefined){
+      $scope.err[i]="Please select a file before accepting/ submitting";
+    }
+    else{
+    $scope.err[i]="";
     console.log(name,value,asset,i);
     var id = $scope.getId(name);
     //console.log(id);
@@ -407,9 +403,11 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
           { 
             $scope.f = "";
             console.log('Contract Updated: ', project);
-            
+            $scope.blocks[$scope.getAccountName(value)]=true;
+            console.log($scope.blocks);
           });
       });
+    }
   }
 
   $scope.endContract = function(name)
@@ -422,6 +420,8 @@ app.controller("MainController",['$scope','Upload', '$timeout','$window','$state
       function (project)
     { 
       console.log('Contract Ended: ', project);
+      $scope.setCompleted();
+      $scope.blocks.Complete = true;
     });
   }
 
